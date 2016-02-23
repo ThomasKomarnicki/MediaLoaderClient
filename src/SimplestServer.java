@@ -41,8 +41,11 @@ public class SimplestServer {
         ContextHandler mediaContextHandler = new ContextHandler("/media");
         mediaContextHandler.setHandler(new MediaResourceHandler());
 
+        ContextHandler pingContextHandler = new ContextHandler("/media");
+        pingContextHandler.setHandler(new PingResourceHandler());
+
         HandlerList handlerList = new HandlerList();
-        handlerList.setHandlers(new Handler[]{dataContextHandler, mediaContextHandler});
+        handlerList.setHandlers(new Handler[]{dataContextHandler, mediaContextHandler, pingContextHandler});
 
         server.setHandler(handlerList);
     }
