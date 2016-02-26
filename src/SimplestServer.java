@@ -11,7 +11,7 @@ public class SimplestServer {
 
     public static void main( String[] args ) throws Exception
     {
-        Server server = new Server(8080);
+        Server server = new Server(8988);
 
 
 //        server.setHandler(new HelloHandler("Please Help", "noooo"));
@@ -41,7 +41,7 @@ public class SimplestServer {
         ContextHandler mediaContextHandler = new ContextHandler("/media");
         mediaContextHandler.setHandler(new MediaResourceHandler());
 
-        ContextHandler pingContextHandler = new ContextHandler("/media");
+        ContextHandler pingContextHandler = new ContextHandler("/ping");
         pingContextHandler.setHandler(new PingResourceHandler());
 
         HandlerList handlerList = new HandlerList();
