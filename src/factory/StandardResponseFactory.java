@@ -50,4 +50,19 @@ public class StandardResponseFactory implements ResponseFactory {
         return resourcesResponse;
 
     }
+    
+    private List<ResourceGroup> createResourceGroupsFromFileSelection(FileSelection fileSelection){
+        List<ResourceGroup> groups = new ArrayList<>();
+        
+        // if should only include immediate video files in directory
+            groups.add(new ResourceGroup(fileSelection.getFile(),fileSelection.getFile().getName()));
+        
+        // else if should include all videos in subdirectories
+            // add all files in parent and subdirectories to new group
+            
+        // else if should include all files but in different directories
+            
+        
+        return groups;
+    }
 }
