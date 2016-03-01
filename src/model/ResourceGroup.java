@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public class ResourceGroup {
 
-    transient private String[] extensions = new String[]{"mp4","avi","mov"};
+    public static final String[] extensions = new String[]{"mp4","avi","mov"};
 
     private String name;
     private String groupName;
@@ -30,10 +31,16 @@ public class ResourceGroup {
         this.name = directory.getName();
         resourceList = new ArrayList<MediaResource>();
 
-        for(Object object : FileUtils.listFiles(directory, extensions, true)){
+        for(Object object : FileUtils.listFiles(directory, extensions, false)){
             File file = (File) object;
             resourceList.add(new MediaResource(file,directory, groupName));
         }
 
+    }
+
+    public ResourceGroup(Collection<File> files, String groupName){
+        for(File file : files){
+            resourceList.add(new MediaResource(file, directory, groupName));
+        }
     }
 }
