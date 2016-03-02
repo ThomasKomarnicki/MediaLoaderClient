@@ -7,10 +7,11 @@ import java.io.File;
  */
 public class FileSelection {
 
-    private File file;
+    private transient File file;
+
+    private String filePath;
 
     private boolean includeSubDirectories;
-    private boolean listSubDirectoriesIndependently;
 
     public File getFile() {
         return file;
@@ -20,7 +21,5 @@ public class FileSelection {
         return includeSubDirectories;
     }
 
-    public boolean listSubDirectoriesIndependently(){
-        return listSubDirectoriesIndependently;
-    }
+
 }

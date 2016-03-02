@@ -26,21 +26,18 @@ public class ResourceGroup {
      */
 
     public ResourceGroup(String fullPath, String groupName){
+        this(fullPath, groupName, false);
+    }
+
+    public ResourceGroup(String fullPath, String groupName, boolean includeSubdirectories){
         this.groupName = groupName;
         File directory = new File(fullPath);
         this.name = directory.getName();
         resourceList = new ArrayList<MediaResource>();
 
-        for(Object object : FileUtils.listFiles(directory, extensions, false)){
+        for(Object object : FileUtils.listFiles(directory, extensions, includeSubdirectories)){
             File file = (File) object;
             resourceList.add(new MediaResource(file,directory, groupName));
-        }
-
-    }
-
-    public ResourceGroup(Collection<File> files, String groupName){
-        for(File file : files){
-            resourceList.add(new MediaResource(file, directory, groupName));
         }
     }
 }

@@ -37,15 +37,20 @@ public class StandardResponseFactory implements ResponseFactory {
 
     }
 
-    private ResourcesResponse createResponseFromFileSelection(UserFileSelections userFileSelections){
+    private UserFileSelections loadUserFileSelection(){
+        // load from file probably?
+
+
+    }
+
+    private ResourcesResponse createResponseFromFileSelection(){
         ResourcesResponse resourcesResponse = new ResourcesResponse();
 
         List<ResourceGroup> resourceGroups = new ArrayList<ResourceGroup>();
 
-        for(FileSelection fileSelection : userFileSelections.getSelections()){
+        for(FileSelection fileSelection : loadUserFileSelection().getSelections()){
             resourceGroups.addAll(createResourceGroupsFromFileSelection(fileSelection));
         }
-        resourceGroups.add(new ResourceGroup("C:/Users/tdk10/Downloads/test_dir","dir1"));
 
         resourcesResponse.setResourceGroups(resourceGroups);
 
@@ -59,23 +64,14 @@ public class StandardResponseFactory implements ResponseFactory {
         
         // if should only include immediate video files in directory
         if(!fileSelection.includeSubDirectories()) {
-            groups.add(new ResourceGroup(fileSelection.getFile().getPath(), fileSelection.getFile().getName()));
+            groups.add(new ResourceGroup(fileSelection.getFile().getPath(), fileSelection.getFile().getName(), false));
         }
-        else if(fileSelection.includeSubDirectories() && !fileSelection.listSubDirectoriesIndependently()) {
+        else if(fileSelection.includeSubDirectories()) {
             // else if should include all videos in subdirectories
                 // add all files in parent and subdirectories to new group
-            for(Object object :FileUtils.listFiles(fileSelection.getFile(), ResourceGroup.extensions, true)){
-                if(object instanceof File){
-                    File file = (File) object;
-                    groups.add(new ResourceGroup(file.getPath(), file.getName()));
-                }
-            }
-        }else if(fileSelection.includeSubDirectories() && fileSelection.listSubDirectoriesIndependently()){
-            // else if should include all files but in different directories
-        }
-            
+            groups.add(new ResourceGroup(fileSelection.getFile().getPath(), fileSelection.getFile().getName(), true));
 
-            
+        }
         
         return groups;
     }
