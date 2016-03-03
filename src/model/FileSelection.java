@@ -14,6 +14,9 @@ public class FileSelection {
     private boolean includeSubDirectories;
 
     public File getFile() {
+        if(file == null){
+            file = new File(filePath);
+        }
         return file;
     }
 

@@ -9,7 +9,10 @@ import model.ResourcesResponse;
 import model.UserFileSelections;
 import org.apache.commons.io.FileUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +43,15 @@ public class StandardResponseFactory implements ResponseFactory {
     private UserFileSelections loadUserFileSelection(){
         // load from file probably?
 
-
+        String home = System.getProperty("user.home");
+        File selectionsFile = new File(home+File.separator+"Documents"+File.separator+".ml_file_selections.json"); // todo change?
+        try {
+            UserFileSelections userFileSelections = gson.fromJson(readFile(selectionsFile.getPath()),UserFileSelections.class);
+            return userFileSelections;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private ResourcesResponse createResponseFromFileSelection(){
@@ -48,8 +59,11 @@ public class StandardResponseFactory implements ResponseFactory {
 
         List<ResourceGroup> resourceGroups = new ArrayList<ResourceGroup>();
 
-        for(FileSelection fileSelection : loadUserFileSelection().getSelections()){
-            resourceGroups.addAll(createResourceGroupsFromFileSelection(fileSelection));
+        UserFileSelections userFileSelections = loadUserFileSelection();
+        if(userFileSelections != null) {
+            for (FileSelection fileSelection : userFileSelections.getSelections()) {
+                resourceGroups.addAll(createResourceGroupsFromFileSelection(fileSelection));
+            }
         }
 
         resourcesResponse.setResourceGroups(resourceGroups);
@@ -74,5 +88,23 @@ public class StandardResponseFactory implements ResponseFactory {
         }
         
         return groups;
+    }
+
+    private String readFile(String path) throws IOException {
+        BufferedReader reader = new BufferedReader( new FileReader(path));;
+        String         line = null;
+        StringBuilder  stringBuilder = new StringBuilder();
+        String         ls = System.getProperty("line.separator");
+
+        try {
+            while( ( line = reader.readLine() ) != null ) {
+                stringBuilder.append( line );
+                stringBuilder.append( ls );
+            }
+
+            return stringBuilder.toString();
+        } finally {
+            reader.close();
+        }
     }
 }

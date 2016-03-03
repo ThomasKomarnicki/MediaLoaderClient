@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class ResourceGroup {
 
-    public static final String[] extensions = new String[]{"mp4","avi","mov"};
+    public static final String[] extensions = new String[]{"mp4","avi","mov","mkv"};
 
     private String name;
     private String groupName;

@@ -1,4 +1,5 @@
 import factory.ResponseFactory;
+import factory.StandardResponseFactory;
 import factory.TestResponseFactory;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Request;
@@ -18,7 +19,8 @@ public class ResourceQueryHandler extends AbstractHandler {
     private ResponseFactory responseFactory;
 
     public ResourceQueryHandler(){
-        responseFactory = new TestResponseFactory();
+//        responseFactory = new TestResponseFactory();
+        responseFactory = new StandardResponseFactory();
     }
 
 
