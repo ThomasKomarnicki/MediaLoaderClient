@@ -1,4 +1,8 @@
+package com.doglandia.medialoader;
 
+import com.doglandia.medialoader.handlers.MediaResourceHandler;
+import com.doglandia.medialoader.handlers.PingResourceHandler;
+import com.doglandia.medialoader.handlers.ResourceQueryHandler;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;

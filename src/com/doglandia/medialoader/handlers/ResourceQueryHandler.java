@@ -1,7 +1,7 @@
-import factory.ResponseFactory;
-import factory.StandardResponseFactory;
-import factory.TestResponseFactory;
-import org.eclipse.jetty.server.Handler;
+package com.doglandia.medialoader.handlers;
+
+import com.doglandia.medialoader.factory.ResponseFactory;
+import com.doglandia.medialoader.factory.StandardResponseFactory;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 

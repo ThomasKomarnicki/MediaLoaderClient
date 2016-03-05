@@ -1,3 +1,5 @@
+package com.doglandia.medialoader.handlers;
+
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.ContextHandler;
@@ -14,7 +16,10 @@ import java.io.IOException;
  */
 public class MediaResourceHandler extends HandlerCollection {
 
+
+
     public MediaResourceHandler(){
+
         ContextHandler contextHandler = new ContextHandler();
         contextHandler.setContextPath("/dir1");
 

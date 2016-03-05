@@ -1,4 +1,4 @@
-package model;
+package com.doglandia.medialoader.model;
 
 import org.apache.commons.io.FilenameUtils;
 

@@ -1,13 +1,13 @@
-package factory;
+package com.doglandia.medialoader.factory;
 
+import com.doglandia.medialoader.handlers.MediaResourceHandler;
+import com.doglandia.medialoader.model.FileSelection;
+import com.doglandia.medialoader.model.ResourceGroup;
+import com.doglandia.medialoader.model.ResourcesResponse;
+import com.doglandia.medialoader.model.UserFileSelections;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import model.FileSelection;
-import model.ResourceGroup;
-import model.ResourcesResponse;
-import model.UserFileSelections;
-import org.apache.commons.io.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,6 +23,8 @@ public class StandardResponseFactory implements ResponseFactory {
 
     private Gson gson;
 
+    private MediaResourceHandler mediaResourceHandler;
+
     public StandardResponseFactory(){
         gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
     }
@@ -37,6 +39,7 @@ public class StandardResponseFactory implements ResponseFactory {
 
     @Override
     public void doResourceResponse() {
+
 
     }
 

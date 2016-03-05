@@ -1,10 +1,10 @@
-package model;
+package com.doglandia.medialoader.model;
 
+import com.doglandia.medialoader.model.MediaResource;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**

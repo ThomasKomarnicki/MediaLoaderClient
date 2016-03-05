@@ -1,10 +1,10 @@
-package factory;
+package com.doglandia.medialoader.factory;
 
+import com.doglandia.medialoader.model.ResourceGroup;
+import com.doglandia.medialoader.model.ResourcesResponse;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import model.ResourceGroup;
-import model.ResourcesResponse;
 
 import java.util.ArrayList;
 import java.util.List;

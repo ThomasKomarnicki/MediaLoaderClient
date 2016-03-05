@@ -1,4 +1,6 @@
-package model;
+package com.doglandia.medialoader.model;
+
+import com.doglandia.medialoader.model.ResourceGroup;
 
 import java.util.List;
 
