@@ -16,6 +16,7 @@ public class ResourceGroup {
 
     private String name;
     private String groupName;
+    private transient String fullPath;
 
     private List<MediaResource> resourceList;
 
@@ -30,6 +31,7 @@ public class ResourceGroup {
     }
 
     public ResourceGroup(String fullPath, String groupName, boolean includeSubdirectories){
+        this.fullPath = fullPath;
         this.groupName = groupName;
         File directory = new File(fullPath);
         this.name = directory.getName();
@@ -39,5 +41,13 @@ public class ResourceGroup {
             File file = (File) object;
             resourceList.add(new MediaResource(file,directory, groupName));
         }
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public String getFullPath() {
+        return fullPath;
     }
 }

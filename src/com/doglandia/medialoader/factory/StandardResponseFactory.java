@@ -25,7 +25,8 @@ public class StandardResponseFactory implements ResponseFactory {
 
     private MediaResourceHandler mediaResourceHandler;
 
-    public StandardResponseFactory(){
+    public StandardResponseFactory(MediaResourceHandler mediaResourceHandler){
+        this.mediaResourceHandler = mediaResourceHandler;
         gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
     }
 
@@ -33,6 +34,9 @@ public class StandardResponseFactory implements ResponseFactory {
     @Override
     public String createGetResourcesResponse() {
         ResourcesResponse resourcesResponse = createResponseFromFileSelection();
+        if(mediaResourceHandler != null) {
+            mediaResourceHandler.setResourceResponse(resourcesResponse);
+        }
 
         return gson.toJson(resourcesResponse, ResourcesResponse.class);
     }
@@ -57,7 +61,7 @@ public class StandardResponseFactory implements ResponseFactory {
         return null;
     }
 
-    private ResourcesResponse createResponseFromFileSelection(){
+    public ResourcesResponse createResponseFromFileSelection(){
         ResourcesResponse resourcesResponse = new ResourcesResponse();
 
         List<ResourceGroup> resourceGroups = new ArrayList<ResourceGroup>();

@@ -18,9 +18,11 @@ public class ResourceQueryHandler extends AbstractHandler {
 
     private ResponseFactory responseFactory;
 
-    public ResourceQueryHandler(){
+//    private MediaResourceHandler mediaResourceHandler;
+
+    public ResourceQueryHandler(MediaResourceHandler mediaResourceHandler){
 //        responseFactory = new TestResponseFactory();
-        responseFactory = new StandardResponseFactory();
+        responseFactory = new StandardResponseFactory(mediaResourceHandler);
     }
 
 

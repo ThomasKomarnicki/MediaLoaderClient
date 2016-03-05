@@ -18,4 +18,8 @@ public class ResourcesResponse {
     public void setResourceGroups(List<ResourceGroup> resourceGroups) {
         this.resourceGroups = resourceGroups;
     }
+
+    public List<ResourceGroup> getResourceGroups() {
+        return resourceGroups;
+    }
 }

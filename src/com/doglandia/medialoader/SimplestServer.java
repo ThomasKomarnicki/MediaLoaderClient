@@ -6,6 +6,7 @@ import com.doglandia.medialoader.handlers.ResourceQueryHandler;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
 
 public class SimplestServer {
@@ -36,17 +37,18 @@ public class SimplestServer {
     }
 
     private static void setHandlers(Server server){
-        ContextHandler dataContextHandler = new ContextHandler("/data");
-        dataContextHandler.setHandler(new ResourceQueryHandler());
-
+        MediaResourceHandler mediaResourceHandler = new MediaResourceHandler();
         ContextHandler mediaContextHandler = new ContextHandler("/media");
-        mediaContextHandler.setHandler(new MediaResourceHandler());
+        mediaContextHandler.setHandler(mediaResourceHandler);
+
+        ContextHandler dataContextHandler = new ContextHandler("/data");
+        dataContextHandler.setHandler(new ResourceQueryHandler(mediaResourceHandler));
 
         ContextHandler pingContextHandler = new ContextHandler("/ping");
         pingContextHandler.setHandler(new PingResourceHandler());
 
         HandlerList handlerList = new HandlerList();
-        handlerList.setHandlers(new Handler[]{dataContextHandler, mediaContextHandler, pingContextHandler});
+        handlerList.setHandlers(new Handler[]{ dataContextHandler, mediaContextHandler, pingContextHandler});
 
         server.setHandler(handlerList);
     }
