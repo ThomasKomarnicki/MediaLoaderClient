@@ -8,6 +8,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 
 public class SimplestServer {
 
@@ -31,6 +32,7 @@ public class SimplestServer {
 //        gzip.setHandler(handlers);
 
         setHandlers(server);
+//        setTestHandlers(server);
 
         server.start();
         server.join();
@@ -51,5 +53,12 @@ public class SimplestServer {
         handlerList.setHandlers(new Handler[]{ dataContextHandler, mediaContextHandler, pingContextHandler});
 
         server.setHandler(handlerList);
+    }
+
+    private static void setTestHandlers(Server server){
+        ResourceHandler resourceHandler = new ResourceHandler();
+        resourceHandler.setResourceBase("C:/Users/tdk10/Downloads/The Walking Dead/season3");
+        resourceHandler.setDirectoriesListed(true);
+        server.setHandler(resourceHandler);
     }
 }

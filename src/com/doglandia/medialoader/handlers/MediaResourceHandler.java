@@ -3,12 +3,10 @@ package com.doglandia.medialoader.handlers;
 import com.doglandia.medialoader.factory.StandardResponseFactory;
 import com.doglandia.medialoader.model.ResourceGroup;
 import com.doglandia.medialoader.model.ResourcesResponse;
+import org.eclipse.jetty.http.MimeTypes;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.handler.ContextHandler;
-import org.eclipse.jetty.server.handler.HandlerCollection;
-import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.server.handler.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,35 +18,40 @@ import java.util.List;
 /**
  * Created by tdk10 on 2/21/2016.
  */
-public class MediaResourceHandler extends HandlerCollection {
+public class MediaResourceHandler extends AbstractHandler {
 
-    private boolean handlersSet = false;
+    List<ContextHandler> handlers;
+    List<ResourceGroup> resourceGroups;
 
     public MediaResourceHandler(){
-        super(true);
+        handlers = new ArrayList<ContextHandler>();
+        resourceGroups = new ArrayList<ResourceGroup>();
 
         StandardResponseFactory responseFactory = new StandardResponseFactory(null);
         setResourceResponse(responseFactory.createResponseFromFileSelection());
     }
 
     public void setResourceResponse(ResourcesResponse resourcesResponse) {
+        if(handlers.size() > 0){
+            return;
+        }
+        handlers.clear();
 
-        List<ContextHandler> handlerList = new ArrayList<ContextHandler>();
+        resourceGroups.clear();
+        resourceGroups.addAll(resourcesResponse.getResourceGroups());
+        for(ResourceGroup resourceGroup : resourceGroups){
 
-        for(ResourceGroup resourceGroup : resourcesResponse.getResourceGroups()){
-            ContextHandler contextHandler = new ContextHandler();
-            contextHandler.setContextPath("/"+resourceGroup.getGroupName());
+            ContextHandler contextHandler = new ContextHandler("/"+resourceGroup.getGroupName());
 
             ResourceHandler resourceHandler = new ResourceHandler();
             resourceHandler.setResourceBase(resourceGroup.getFullPath());
+            resourceHandler.setMimeTypes(new MimeTypes());
             resourceHandler.setDirectoriesListed(true);
 
             contextHandler.setHandler(resourceHandler);
-            handlerList.add(contextHandler);
+            handlers.add(contextHandler);
 
         }
-
-
 //        ContextHandler contextHandler = new ContextHandler();
 //        contextHandler.setContextPath("/dir1");
 //
@@ -58,32 +61,32 @@ public class MediaResourceHandler extends HandlerCollection {
 
 //        contextHandler.setHandler(resourceHandler);
 
-        ContextHandler[] handlers = new ContextHandler[handlerList.size()];
-        for(int i = 0; i < handlerList.size(); i++){
-            handlers[i] = handlerList.get(i);
-        }
-
-        if(!handlersSet) {
-            setHandlers(handlers);
-            handlersSet = true;
-        }
-
     }
 
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException
     {
-        Handler[] handlers = getHandlers();
 
         if (handlers!=null && isStarted())
         {
-            for (int i=0;i<handlers.length;i++)
+            for (int i=0;i<handlers.size();i++)
             {
-                handlers[i].handle(target,baseRequest, request, response);
-                if ( baseRequest.isHandled())
-                    return;
+                if(handlerShouldHandle(handlers.get(i), target)) {
+//                    handlers.get(i).handle(target, baseRequest, request, response);
+                    ResourceGroup resourceGroup = resourceGroups.get(i);
+                    baseRequest.setContextPath("/"+resourceGroup.getGroupName());
+                    baseRequest.setPathInfo(baseRequest.getPathInfo().replace(resourceGroup.getGroupName(),"").replace("//","/"));
+                    handlers.get(i).getHandler().handle(target, baseRequest, request, response);
+                    if (baseRequest.isHandled()) {
+                        return;
+                    }
+                }
             }
         }
+    }
+
+    private boolean handlerShouldHandle(ContextHandler contextHandler, String target){
+        return target.contains(contextHandler.getContextPath());
     }
 }
