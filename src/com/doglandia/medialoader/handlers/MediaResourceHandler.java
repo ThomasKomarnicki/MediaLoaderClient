@@ -7,6 +7,7 @@ import org.eclipse.jetty.http.MimeTypes;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.*;
+import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -41,14 +42,17 @@ public class MediaResourceHandler extends AbstractHandler {
         resourceGroups.addAll(resourcesResponse.getResourceGroups());
         for(ResourceGroup resourceGroup : resourceGroups){
 
+
             ContextHandler contextHandler = new ContextHandler("/"+resourceGroup.getGroupName());
 
+            GzipHandler gzipHandler = new GzipHandler();
             ResourceHandler resourceHandler = new ResourceHandler();
             resourceHandler.setResourceBase(resourceGroup.getFullPath());
             resourceHandler.setMimeTypes(new MimeTypes());
             resourceHandler.setDirectoriesListed(true);
+            gzipHandler.setHandler(resourceHandler);
 
-            contextHandler.setHandler(resourceHandler);
+            contextHandler.setHandler(gzipHandler);
             handlers.add(contextHandler);
 
         }
