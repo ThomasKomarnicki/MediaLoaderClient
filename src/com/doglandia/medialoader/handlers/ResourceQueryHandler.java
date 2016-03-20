@@ -1,7 +1,8 @@
 package com.doglandia.medialoader.handlers;
 
 import com.doglandia.medialoader.factory.ResponseFactory;
-import com.doglandia.medialoader.factory.StandardResponseFactory;
+import com.doglandia.medialoader.factory.UserSelectionResponseFactory;
+import com.doglandia.medialoader.model.UserFileSelections;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
@@ -18,11 +19,9 @@ public class ResourceQueryHandler extends AbstractHandler {
 
     private ResponseFactory responseFactory;
 
-//    private MediaResourceHandler mediaResourceHandler;
 
-    public ResourceQueryHandler(MediaResourceHandler mediaResourceHandler){
-//        responseFactory = new TestResponseFactory();
-        responseFactory = new StandardResponseFactory(mediaResourceHandler);
+    public ResourceQueryHandler(UserFileSelections userFileSelections){
+        responseFactory = new UserSelectionResponseFactory(userFileSelections);
     }
 
 

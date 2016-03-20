@@ -12,4 +12,8 @@ public class UserFileSelections {
     public List<FileSelection> getSelections() {
         return selections;
     }
+
+    public void setSelections(List<FileSelection> selections) {
+        this.selections = selections;
+    }
 }

@@ -19,13 +19,13 @@ import java.util.List;
 /**
  * Created by tdk10 on 2/20/2016.
  */
-public class StandardResponseFactory implements ResponseFactory {
+public class FileBasedResponseFactory implements ResponseFactory {
 
     private Gson gson;
 
     private MediaResourceHandler mediaResourceHandler;
 
-    public StandardResponseFactory(MediaResourceHandler mediaResourceHandler){
+    public FileBasedResponseFactory(MediaResourceHandler mediaResourceHandler){
         this.mediaResourceHandler = mediaResourceHandler;
         gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
     }

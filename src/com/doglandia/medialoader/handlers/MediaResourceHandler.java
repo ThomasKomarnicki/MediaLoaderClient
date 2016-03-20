@@ -1,10 +1,11 @@
 package com.doglandia.medialoader.handlers;
 
-import com.doglandia.medialoader.factory.StandardResponseFactory;
+import com.doglandia.medialoader.factory.FileBasedResponseFactory;
+import com.doglandia.medialoader.factory.UserSelectionResponseFactory;
 import com.doglandia.medialoader.model.ResourceGroup;
 import com.doglandia.medialoader.model.ResourcesResponse;
+import com.doglandia.medialoader.model.UserFileSelections;
 import org.eclipse.jetty.http.MimeTypes;
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.*;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
@@ -24,12 +25,13 @@ public class MediaResourceHandler extends AbstractHandler {
     List<ContextHandler> handlers;
     List<ResourceGroup> resourceGroups;
 
-    public MediaResourceHandler(){
+    public MediaResourceHandler(UserFileSelections userFileSelections){
         handlers = new ArrayList<ContextHandler>();
         resourceGroups = new ArrayList<ResourceGroup>();
 
-        StandardResponseFactory responseFactory = new StandardResponseFactory(null);
-        setResourceResponse(responseFactory.createResponseFromFileSelection());
+//        FileBasedResponseFactory responseFactory = new FileBasedResponseFactory(null);
+        UserSelectionResponseFactory userSelectionResponseFactory = new UserSelectionResponseFactory(userFileSelections);
+        setResourceResponse(userSelectionResponseFactory.createResponseFromFileSelection());
     }
 
     public void setResourceResponse(ResourcesResponse resourcesResponse) {
