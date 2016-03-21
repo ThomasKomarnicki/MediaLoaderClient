@@ -27,7 +27,7 @@ public class FileBasedResponseFactory implements ResponseFactory {
 
     public FileBasedResponseFactory(MediaResourceHandler mediaResourceHandler){
         this.mediaResourceHandler = mediaResourceHandler;
-        gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+        gson = new GsonBuilder().create();
     }
 
 
@@ -47,11 +47,14 @@ public class FileBasedResponseFactory implements ResponseFactory {
 
     }
 
-    private UserFileSelections loadUserFileSelection(){
-        // load from file probably?
-
+    private static File getSelectionsFile(){
         String home = System.getProperty("user.home");
-        File selectionsFile = new File(home+File.separator+"Documents"+File.separator+".ml_file_selections.json"); // todo change?
+        return new File(home+File.separator+"AppData"+File.separator+"Roaming"+File.separator+"MediaLoader"+File.separator+"user_file_selections.json");
+    }
+
+    private UserFileSelections loadUserFileSelection(){
+
+        File selectionsFile =  getSelectionsFile();
         try {
             UserFileSelections userFileSelections = gson.fromJson(readFile(selectionsFile.getPath()),UserFileSelections.class);
             return userFileSelections;
