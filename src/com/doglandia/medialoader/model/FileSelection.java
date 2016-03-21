@@ -9,19 +9,19 @@ public class FileSelection {
 
     private transient File file;
 
-    private String filePath;
+    private String directoryPath;
 
-    private boolean includeSubDirectories;
+    private boolean includeSubDirs;
 
     public File getFile() {
         if(file == null){
-            file = new File(filePath);
+            file = new File(directoryPath);
         }
         return file;
     }
 
     public boolean includeSubDirectories() {
-        return includeSubDirectories;
+        return includeSubDirs;
     }
 
 
