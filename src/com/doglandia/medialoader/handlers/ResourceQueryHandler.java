@@ -1,5 +1,6 @@
 package com.doglandia.medialoader.handlers;
 
+import com.doglandia.medialoader.factory.FileBasedResponseFactory;
 import com.doglandia.medialoader.factory.ResponseFactory;
 import com.doglandia.medialoader.factory.UserSelectionResponseFactory;
 import com.doglandia.medialoader.model.UserFileSelections;
@@ -20,8 +21,8 @@ public class ResourceQueryHandler extends AbstractHandler {
     private ResponseFactory responseFactory;
 
 
-    public ResourceQueryHandler(UserFileSelections userFileSelections){
-        responseFactory = new UserSelectionResponseFactory(userFileSelections);
+    public ResourceQueryHandler(MediaResourceHandler mediaResourceHandler){
+        responseFactory = new FileBasedResponseFactory(mediaResourceHandler);
     }
 
 

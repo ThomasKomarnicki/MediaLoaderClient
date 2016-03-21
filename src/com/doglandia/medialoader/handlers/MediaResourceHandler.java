@@ -1,6 +1,7 @@
 package com.doglandia.medialoader.handlers;
 
 import com.doglandia.medialoader.factory.FileBasedResponseFactory;
+import com.doglandia.medialoader.factory.ResponseFactory;
 import com.doglandia.medialoader.factory.UserSelectionResponseFactory;
 import com.doglandia.medialoader.model.ResourceGroup;
 import com.doglandia.medialoader.model.ResourcesResponse;
@@ -25,13 +26,13 @@ public class MediaResourceHandler extends AbstractHandler {
     List<ContextHandler> handlers;
     List<ResourceGroup> resourceGroups;
 
-    public MediaResourceHandler(UserFileSelections userFileSelections){
+    public MediaResourceHandler(){
         handlers = new ArrayList<ContextHandler>();
         resourceGroups = new ArrayList<ResourceGroup>();
 
 //        FileBasedResponseFactory responseFactory = new FileBasedResponseFactory(null);
-        UserSelectionResponseFactory userSelectionResponseFactory = new UserSelectionResponseFactory(userFileSelections);
-        setResourceResponse(userSelectionResponseFactory.createResponseFromFileSelection());
+        FileBasedResponseFactory responseFactory = new FileBasedResponseFactory(null);
+        setResourceResponse(responseFactory.createResponseFromFileSelection());
     }
 
     public void setResourceResponse(ResourcesResponse resourcesResponse) {

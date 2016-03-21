@@ -24,12 +24,4 @@ public class FileSelection {
         return includeSubDirs;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-        file = new File(filePath);
-    }
-
-    public void setIncludeSubDirectories(boolean includeSubDirectories) {
-        this.includeSubDirectories = includeSubDirectories;
-    }
 }
